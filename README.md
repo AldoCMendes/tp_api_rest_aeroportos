@@ -13,13 +13,16 @@
 ## Configuração do Ambiente
 - Requisitos:
   - JDK 17+ (`java -version` deve retornar 17 ou superior)
-  - Maven instalado (`mvn -v`). Caso não tenha Maven, instale via https://maven.apache.org/ ou use um ambiente que já possua Maven.
+  - Maven instalado (`mvn -v`).
+  - MySQL 8+ com uma base criada, por exemplo `aeroportosdb`.
+    - Crie com: `CREATE DATABASE aeroportosdb CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;`
+    - Ajuste usuário/senha via variáveis de ambiente `DB_USERNAME` e `DB_PASSWORD`.
 
 ## Como Executar a Aplicação
-- Configuração padrão usa H2 em memória e importa dados do CSV ao iniciar.
+- Configuração padrão usa MySQL local (`localhost:3306/aeroportosdb`) e importa dados do CSV ao iniciar.
 - Com Maven instalado:
   - `mvn spring-boot:run`
-  - Endpoints expostos em `http://localhost:8080/api/v1/aeroportos`
+  - Endpoints em `http://localhost:8080/api/v1/aeroportos`
 
 ## Endpoints
 - `GET /api/v1/aeroportos` — lista todos
@@ -31,7 +34,7 @@
 ## Importação de Dados
 - Controlada por propriedades em `src/main/resources/application.properties`:
   - `app.import.csv.enabled=true`
-  - `app.import.csv.url=https://raw.githubusercontent.com/profdiegoaugusto/banco-dados/master/mysql/linguagem-consulta-dados/data/airports.csv`
+  - `app.import.csv.url=...`
 - Em testes de integração o import é desativado (`application-test.properties`).
 
 ## Como Executar os Testes
