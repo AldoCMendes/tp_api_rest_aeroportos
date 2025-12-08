@@ -51,7 +51,24 @@ public class DataImporter implements CommandLineRunner {
   }
 
   private String[] splitCsv(String line) {
-    return line.split(",(?=(?:[^"]*"[^"]*")*[^"]*$)");
+    java.util.List<String> cols = new java.util.ArrayList<>();
+    StringBuilder cur = new StringBuilder();
+    boolean inQuotes = false;
+    for (int i = 0; i < line.length(); i++) {
+      char c = line.charAt(i);
+      if (c == '"') {
+        inQuotes = !inQuotes;
+        continue;
+      }
+      if (c == ',' && !inQuotes) {
+        cols.add(cur.toString());
+        cur.setLength(0);
+      } else {
+        cur.append(c);
+      }
+    }
+    cols.add(cur.toString());
+    return cols.toArray(new String[0]);
   }
 
   private String trimQuotes(String s) {
@@ -69,4 +86,3 @@ public class DataImporter implements CommandLineRunner {
     }
   }
 }
-

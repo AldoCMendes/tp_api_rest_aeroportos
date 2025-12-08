@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class GlobalExceptionHandler {
   @ExceptionHandler(AeroportoNaoEncontradoException.class)
-  public ResponseEntity<ErrorResponse> handleNotFound(AeroportoNaoEncontradoException ex, HttpServletRequest req) {
-    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ErrorResponse.of(HttpStatus.NOT_FOUND, ex.getMessage(), req.getRequestURI()));
+  public ResponseEntity<Void> handleNotFound(AeroportoNaoEncontradoException ex, HttpServletRequest req) {
+    return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
   }
 
   @ExceptionHandler({IllegalArgumentException.class})
@@ -38,4 +38,3 @@ public class GlobalExceptionHandler {
     return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ErrorResponse.of(HttpStatus.INTERNAL_SERVER_ERROR, "Erro interno", req.getRequestURI()));
   }
 }
-
